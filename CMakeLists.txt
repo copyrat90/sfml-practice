@@ -9,8 +9,10 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
+add_subdirectory(third_party/boxer)
+
 add_executable(SfmlPrac src/main.cpp)
-target_link_libraries(SfmlPrac PRIVATE sfml-graphics)
+target_link_libraries(SfmlPrac PRIVATE sfml-graphics sfml-audio Boxer)
 target_compile_features(SfmlPrac PRIVATE cxx_std_20)
 if (WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(TARGET SfmlPrac POST_BUILD

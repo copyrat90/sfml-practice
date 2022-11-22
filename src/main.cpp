@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <boxer/boxer.h>
 
 int main()
 {
@@ -11,6 +12,7 @@ int main()
         {
             if (event.type == sf::Event::Closed)
             {
+                boxer::show("Window will now be closed.", "Close requested");
                 window.close();
             }
         }
