@@ -1,4 +1,3 @@
-
 BasedOnStyle: Microsoft
 IndentWidth: 4
 ---
@@ -8,4 +7,6 @@ PointerAlignment: Left
 AccessModifierOffset: -4
 AlignEscapedNewlines: DontAlign
 AlwaysBreakTemplateDeclarations: Yes
+IndentRequires: true
 ---
+

@@ -1,10 +1,35 @@
+#include <stdexcept>
+
 #include <SFML/Graphics.hpp>
 #include <boxer/boxer.h>
 
+#include "ResourceHolder.hpp"
+
+enum class TextureId
+{
+    SPLASH_RAT,
+
+    MAX_COUNT
+};
+
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "CMake SFML Project" };
-    window.setFramerateLimit(144);
+    sf::RenderWindow window{{1280, 720}, "SFML Practice"};
+    window.setFramerateLimit(95);
+
+    gr::ResourceHolder<sf::Texture, TextureId, (int)TextureId::MAX_COUNT> textureHolder;
+    try
+    {
+        textureHolder.loadFromFile(TextureId::SPLASH_RAT, "assets/graphics/splash_rat.png");
+    }
+    catch (std::runtime_error& e)
+    {
+        boxer::show(e.what(), "Texture load error");
+        return 1;
+    }
+
+    sf::Sprite sprite(textureHolder.get(TextureId::SPLASH_RAT));
+    sprite.setPosition(100, 100);
 
     while (window.isOpen())
     {
@@ -18,6 +43,7 @@ int main()
         }
 
         window.clear();
+        window.draw(sprite);
         window.display();
     }
 }

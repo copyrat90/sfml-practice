@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(SfmlPrac LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+set(BUILD_SHARED_LIBS FALSE)
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -20,3 +21,4 @@ if (WIN32 AND BUILD_SHARED_LIBS)
 endif()
 
 install(TARGETS SfmlPrac)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
