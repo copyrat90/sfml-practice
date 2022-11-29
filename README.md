@@ -4,6 +4,22 @@ As name suggests, this is my *experimental* repo with SFML, so there are tons of
 
 Each *experiment* will be reside in each branch, so there will be many branches I think.
 
+## Useful Resources
+
+* [SFML Game Development](https://www.packtpub.com/product/sfml-game-development/9781849696845) ([GitHub repo](https://github.com/SFML/SFML-Game-Development-Book))
+
+## Build
+
+```bash
+cmake -G Ninja -S . -B build -DCMAKE_INSTALL_PREFIX=install -DCMAKE_CXX_COMPILER=g++-11 -DCMAKE_C_COMPILER=gcc-11
+```
+
+### Linux (tested for Ubuntu 20.04)
+
+`FetchContent` doesn't seem to be work on Ubuntu 20.04 CLI.\
+Manually installing `libsfml-dev` package should solve the issue.
+
+
 End of description. Original readme below.
 
 
