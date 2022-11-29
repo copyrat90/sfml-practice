@@ -1,3 +1,12 @@
+# sfml-practice
+
+As name suggests, this is my *experimental* repo with SFML, so there are tons of ugly code in here.
+
+Each *experiment* will be reside in each branch, so there will be many branches I think.
+
+End of description. Original readme below.
+
+
 # CMake SFML Project Template
 
 This repository template should allow for a fast and hassle-free kick start of your next SFML project using CMake.
