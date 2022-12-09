@@ -5,6 +5,8 @@
 #include "ResourceHolder.hpp"
 #include "ResourceId.hpp"
 
+#include "Player.hpp"
+
 namespace gr
 {
 
@@ -31,7 +33,9 @@ private:
 
     TextureHolder _textureHolder;
 
-    sf::Sprite _testSprite;
+    sf::Sprite _tilemapSprite;
+    sf::Sprite _uiSprite;
+    Player _player;
 };
 
 } // namespace gr

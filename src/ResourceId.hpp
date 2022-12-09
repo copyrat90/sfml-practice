@@ -16,7 +16,9 @@ class ResourceHolder;
 
 enum class TextureId
 {
-    SPLASH_RAT,
+    PLAYER,
+    TILEMAP,
+    UI,
 
     MAX_COUNT
 };

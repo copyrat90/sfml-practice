@@ -24,6 +24,7 @@ add_subdirectory(third_party/boxer)
 add_executable(SfmlPrac
     src/main.cpp
     src/Game.cpp
+    src/Player.cpp
 )
 target_link_libraries(SfmlPrac PRIVATE sfml-graphics sfml-audio Boxer)
 target_compile_features(SfmlPrac PRIVATE cxx_std_20)
