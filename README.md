@@ -12,6 +12,7 @@ Each *experiment* will be reside in each branch, so there will be many branches 
 
 ```bash
 cmake -G Ninja -S . -B build -DCMAKE_INSTALL_PREFIX=install -DCMAKE_CXX_COMPILER=g++-11 -DCMAKE_C_COMPILER=gcc-11
+cmake --build build --target install
 ```
 
 ### Linux (tested for Ubuntu 20.04)
