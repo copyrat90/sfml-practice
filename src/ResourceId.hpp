@@ -5,7 +5,8 @@
 namespace sf
 {
 class Texture;
-}
+class Shader;
+} // namespace sf
 
 namespace gr
 {
@@ -23,6 +24,15 @@ enum class TextureId
     MAX_COUNT
 };
 
+enum class ShaderId
+{
+    HEAT_HAZE,
+
+    MAX_COUNT
+};
+
 using TextureHolder = ResourceHolder<sf::Texture, TextureId, (int)TextureId::MAX_COUNT>;
+
+using ShaderHolder = ResourceHolder<sf::Shader, ShaderId, (int)ShaderId::MAX_COUNT>;
 
 } // namespace gr

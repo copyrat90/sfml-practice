@@ -28,10 +28,20 @@ private:
     void _update(const sf::Time deltaTime);
     void _render();
 
+    void _renderFirstPass();
+    void _renderSecondPass();
+    void _renderToWindowWithScaling();
+
 private:
     sf::RenderWindow _window;
+    sf::RenderTexture _postEffectRequired;
+    sf::RenderTexture _postEffectApplied;
 
     TextureHolder _textureHolder;
+    ShaderHolder _shaderHolder;
+
+    bool _isCustomShaderEnabled = true;
+    float _hazeRadians = 0;
 
     sf::Sprite _tilemapSprite;
     sf::Sprite _uiSprite;
