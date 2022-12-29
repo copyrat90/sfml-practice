@@ -21,9 +21,12 @@ endif()
 
 add_subdirectory(third_party/boxer)
 
+file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
+    ${CMAKE_SOURCE_DIR}/src/*.cpp
+)
+
 add_executable(SfmlPrac
-    src/main.cpp
-    src/Game.cpp
+    ${SRC_FILES}
 )
 target_link_libraries(SfmlPrac PRIVATE sfml-graphics sfml-audio Boxer)
 target_compile_features(SfmlPrac PRIVATE cxx_std_20)
