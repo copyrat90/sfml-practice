@@ -1,9 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
-#include "ResourceHolder.hpp"
-#include "ResourceId.hpp"
+#include "World.hpp"
 
 namespace gr
 {
@@ -20,18 +19,13 @@ public:
     void run();
 
 private:
-    void loadResources();
-
     void processEvents();
     void update(const sf::Time deltaTime);
     void render();
 
 private:
     sf::RenderWindow _window;
-
-    TextureHolder _textureHolder;
-
-    sf::Sprite _testSprite;
+    World _world;
 };
 
 } // namespace gr

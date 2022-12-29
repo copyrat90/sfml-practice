@@ -1,19 +1,15 @@
 #include "Game.hpp"
 
+#include <SFML/Window/Event.hpp>
+
 #include <algorithm>
 
 namespace gr
 {
 
-Game::Game() : _window(sf::VideoMode(1280, 720), "SFML Practice")
+Game::Game() : _window(sf::VideoMode(640, 480), "SFML Practice"), _world(_window)
 {
     _window.setFramerateLimit(FPS);
-
-    loadResources();
-
-    // init test sprite
-    _testSprite.setTexture(_textureHolder.get(TextureId::SPLASH_RAT), true);
-    _testSprite.setPosition(100, 100);
 }
 
 void Game::run()
@@ -40,11 +36,6 @@ void Game::run()
     }
 }
 
-void Game::loadResources()
-{
-    _textureHolder.loadFromFile(TextureId::SPLASH_RAT, "assets/graphics/splash_rat.png");
-}
-
 void Game::processEvents()
 {
     for (auto event = sf::Event{}; _window.pollEvent(event);)
@@ -62,13 +53,14 @@ void Game::processEvents()
 
 void Game::update(const sf::Time deltaTime)
 {
+    _world.update(deltaTime);
 }
 
 void Game::render()
 {
     _window.clear();
 
-    _window.draw(_testSprite);
+    _window.draw(_world);
 
     _window.display();
 }

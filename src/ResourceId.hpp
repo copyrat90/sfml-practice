@@ -16,7 +16,9 @@ class ResourceHolder;
 
 enum class TextureId
 {
-    SPLASH_RAT,
+    DESERT,
+    EAGLE,
+    RAPTOR,
 
     MAX_COUNT
 };
