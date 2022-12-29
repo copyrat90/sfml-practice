@@ -20,11 +20,11 @@ public:
     void run();
 
 private:
-    void _loadResources();
+    void loadResources();
 
-    void _processEvents();
-    void _update(const sf::Time deltaTime);
-    void _render();
+    void processEvents();
+    void update(const sf::Time deltaTime);
+    void render();
 
 private:
     sf::RenderWindow _window;

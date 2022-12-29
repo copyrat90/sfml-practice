@@ -9,7 +9,7 @@ Game::Game() : _window(sf::VideoMode(1280, 720), "SFML Practice")
 {
     _window.setFramerateLimit(FPS);
 
-    _loadResources();
+    loadResources();
 
     // init test sprite
     _testSprite.setTexture(_textureHolder.get(TextureId::SPLASH_RAT), true);
@@ -33,19 +33,19 @@ void Game::run()
         {
             timeSinceLastUpdate -= FIXED_DELTA_TIME;
 
-            _processEvents();
-            _update(FIXED_DELTA_TIME);
+            processEvents();
+            update(FIXED_DELTA_TIME);
         }
-        _render();
+        render();
     }
 }
 
-void Game::_loadResources()
+void Game::loadResources()
 {
     _textureHolder.loadFromFile(TextureId::SPLASH_RAT, "assets/graphics/splash_rat.png");
 }
 
-void Game::_processEvents()
+void Game::processEvents()
 {
     for (auto event = sf::Event{}; _window.pollEvent(event);)
     {
@@ -60,11 +60,11 @@ void Game::_processEvents()
     }
 }
 
-void Game::_update(const sf::Time deltaTime)
+void Game::update(const sf::Time deltaTime)
 {
 }
 
-void Game::_render()
+void Game::render()
 {
     _window.clear();
 
