@@ -54,7 +54,7 @@ public:
     auto get(Id id) const -> const Resource&
     {
         assert(0 <= (int)id && (int)id < IdMaxCount && "Resource Id out of bound");
-        UptrResource& res = _resourceArray[(int)id];
+        const UptrResource& res = _resourceArray[(int)id];
         assert(res && "Tried to get resource which is not loaded");
         return *res;
     }
