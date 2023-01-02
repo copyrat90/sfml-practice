@@ -7,8 +7,12 @@
 #include <memory>
 #include <vector>
 
+#include "NodeCategories.hpp"
+
 namespace gr
 {
+
+struct Command;
 
 class SceneNode : public sf::Transformable, public sf::Drawable
 {
@@ -28,6 +32,9 @@ public:
 
     auto getWorldPosition() const -> sf::Vector2f;
     auto getWorldTransform() const -> sf::Transform;
+
+    virtual auto getCategories() const -> NodeCategories;
+    void onCommand(const Command&, sf::Time deltaTime);
 
 private:
     void updateChildren(sf::Time deltaTime);

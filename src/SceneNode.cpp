@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include "Command.hpp"
+
 namespace gr
 {
 
@@ -48,6 +50,21 @@ auto SceneNode::getWorldTransform() const -> sf::Transform
         worldTransform = p->getTransform() * worldTransform;
 
     return worldTransform;
+}
+
+auto SceneNode::getCategories() const -> NodeCategories
+{
+    return NodeCategories::SCENE;
+}
+
+void SceneNode::onCommand(const Command& command, sf::Time deltaTime)
+{
+    // 이번 노드가 command의 대상 노드이면, command 실행
+    if (!!(command.categories & getCategories()))
+        command.action(*this, deltaTime);
+
+    for (auto& child : _children)
+        child->onCommand(command, deltaTime);
 }
 
 void SceneNode::updateChildren(sf::Time deltaTime)

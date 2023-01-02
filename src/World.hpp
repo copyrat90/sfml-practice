@@ -7,6 +7,7 @@
 
 #include <array>
 
+#include "CommandQueue.hpp"
 #include "ResourceHolder.hpp"
 #include "ResourceId.hpp"
 #include "SceneNode.hpp"
@@ -30,6 +31,8 @@ public:
 public:
     World(sf::RenderWindow&);
 
+    auto getCommandQueue() -> CommandQueue&;
+
     void update(sf::Time deltaTime);
 
 private:
@@ -37,6 +40,11 @@ private:
 
     void loadTextures();
     void buildScene();
+
+    // 대각선 속도도 1방향 속도와 동일하게 정규화
+    void normalizePlayerVelocity();
+    // 위치를 화면 내로 고정시킴
+    void normalizePlayerPosition();
 
 private:
     enum Layer
@@ -54,6 +62,8 @@ private:
 
     SceneNode _sceneTree;
     std::array<SceneNode*, (int)Layer::TOTAL_COUNT> _sceneLayers;
+
+    CommandQueue _commandQueue;
 
     sf::View _view;
     float _scrollSpeed;

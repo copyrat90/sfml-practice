@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include <cmath>
+
 #include "Aircraft.hpp"
 #include "SpriteNode.hpp"
 
@@ -19,20 +21,29 @@ World::World(sf::RenderWindow& window)
     _view.setCenter(_spawnPos);
 }
 
+auto World::getCommandQueue() -> CommandQueue&
+{
+    return _commandQueue;
+}
+
 void World::update(sf::Time deltaTime)
 {
     _view.move(0, _scrollSpeed * deltaTime.asSeconds());
 
-    auto playerPos = _playerAircraft->getPosition();
-    auto playerVelocity = _playerAircraft->getVelocity();
+    _playerAircraft->setVelocity(0, 0);
+    // 2. 큐에서 Command 를 꺼내서, 트리 내 필요한 모든 노드에 대해 Command 실행
+    // (플레이어 기체 가속 Command도 실행될 것.)
+    while (!_commandQueue.isEmpty())
+        _sceneTree.onCommand(_commandQueue.pop(), deltaTime);
 
-    if (playerPos.x <= _worldBounds.left + 150.f || playerPos.x >= _worldBounds.left + _worldBounds.width - 150.f)
-    {
-        playerVelocity.x = -playerVelocity.x;
-        _playerAircraft->setVelocity(playerVelocity);
-    }
+    normalizePlayerVelocity();
+    // 플레이어 기체 스크롤 속도 추가
+    _playerAircraft->accelerate(0, _scrollSpeed);
 
+    // 3. 모든 노드에 대해 update 실행(플레이어 기체 위치가, 위에서 계산된 속도에 맞게 변경)
     _sceneTree.update(deltaTime);
+
+    normalizePlayerPosition();
 }
 
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -67,17 +78,33 @@ void World::buildScene()
     // Add player aircraft
     auto playerAircraft = std::make_unique<Aircraft>(Aircraft::Type::EAGLE, _textures);
     playerAircraft->setPosition(_spawnPos);
-    playerAircraft->setVelocity(40.f, _scrollSpeed);
     _playerAircraft = playerAircraft.get();
     _sceneLayers[Layer::AIR]->addChild(std::move(playerAircraft));
+}
 
-    // Add 2 escorting aircrafts
-    auto leftEscort = std::make_unique<Aircraft>(Aircraft::Type::RAPTOR, _textures);
-    auto rightEscort = std::make_unique<Aircraft>(Aircraft::Type::RAPTOR, _textures);
-    leftEscort->setPosition(-80.f, 50.f);
-    rightEscort->setPosition(80.f, 50.f);
-    _playerAircraft->addChild(std::move(leftEscort));
-    _playerAircraft->addChild(std::move(rightEscort));
+void World::normalizePlayerVelocity()
+{
+    auto velocity = _playerAircraft->getVelocity();
+    if (velocity.x != 0 && velocity.y != 0)
+    {
+        velocity /= std::sqrt(2.f);
+        _playerAircraft->setVelocity(velocity);
+    }
+}
+
+void World::normalizePlayerPosition()
+{
+    constexpr float PADDING = 40.f;
+    const sf::FloatRect viewBounds(_view.getCenter() - _view.getSize() / 2.f, _view.getSize());
+
+    auto [x, y] = _playerAircraft->getPosition();
+
+    x = std::min(x, viewBounds.left + viewBounds.width - PADDING);
+    x = std::max(x, viewBounds.left + PADDING);
+    y = std::min(y, viewBounds.top + viewBounds.height - PADDING);
+    y = std::max(y, viewBounds.top + PADDING);
+
+    _playerAircraft->setPosition(x, y);
 }
 
 } // namespace gr

@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "PlayerInputHandler.hpp"
 #include "World.hpp"
 
 namespace gr
@@ -32,6 +33,7 @@ private:
     sf::Font _font;
 
     World _world;
+    PlayerInputHandler _playerInputHandler;
 
     // for statistics
     int _statsFrameCounter;

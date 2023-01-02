@@ -21,6 +21,8 @@ public:
 public:
     Aircraft(Type type, const TextureHolder&);
 
+    auto getCategories() const -> NodeCategories override;
+
 private:
     void drawCurrent(sf::RenderTarget&, sf::RenderStates) const override;
 

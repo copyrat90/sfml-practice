@@ -55,9 +55,14 @@ void Game::processEvents()
             _window.close();
             break;
         default:
+            _playerInputHandler.handleEvent(event, _world.getCommandQueue());
             break;
         }
     }
+
+    // 1. 사용자 입력 -> Command로 만들어 Command 큐에 넣기
+    // (우선 Command를 처리하지는 않고, 쌓아만 둔다. 처리는 update()에서 수행)
+    _playerInputHandler.handleRealTimeInput(_world.getCommandQueue());
 }
 
 void Game::update(const sf::Time deltaTime)

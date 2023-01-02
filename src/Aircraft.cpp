@@ -29,6 +29,13 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures) : _type(type), _spr
     _sprite.setOrigin(bounds.width / 2, bounds.height / 2);
 }
 
+auto Aircraft::getCategories() const -> NodeCategories
+{
+    if (_type == Type::EAGLE)
+        return NodeCategories::PLAYER_AIRCRAFT;
+    return NodeCategories::ENEMY_AIRCRAFT;
+}
+
 void Aircraft::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(_sprite, states);
