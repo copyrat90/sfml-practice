@@ -5,7 +5,8 @@
 namespace sf
 {
 class Texture;
-}
+class Font;
+} // namespace sf
 
 namespace gr
 {
@@ -20,9 +21,17 @@ enum class TextureId
     EAGLE,
     RAPTOR,
 
-    MAX_COUNT
+    TOTAL_COUNT
 };
 
-using TextureHolder = ResourceHolder<sf::Texture, TextureId, (int)TextureId::MAX_COUNT>;
+enum class FontId
+{
+    SANSATION,
+
+    TOTAL_COUNT
+};
+
+using TextureHolder = ResourceHolder<sf::Texture, TextureId, (int)TextureId::TOTAL_COUNT>;
+using FontHolder = ResourceHolder<sf::Font, FontId, (int)FontId::TOTAL_COUNT>;
 
 } // namespace gr
