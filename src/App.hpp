@@ -3,21 +3,27 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 #include "PlayerInputHandler.hpp"
-#include "World.hpp"
+#include "ResourceHolder.hpp"
+#include "ResourceId.hpp"
+#include "StateStack.hpp"
 
 namespace gr
 {
 
-class Game final
+class App final
 {
 public:
     static constexpr int FPS = 60;
     static constexpr float SEC_PER_FRAME = 1.f / FPS;
 
+    App(const App&) = delete;
+    App& operator=(const App&) = delete;
+
 public:
-    Game();
+    App();
 
     void run();
 
@@ -28,12 +34,15 @@ private:
 
     void updateStatistics(const sf::Time deltaTime);
 
+    void registerStates();
+
 private:
     sf::RenderWindow _window;
-    sf::Font _font;
+    TextureHolder _textures;
+    FontHolder _fonts;
 
-    World _world;
     PlayerInputHandler _playerInputHandler;
+    StateStack _stateStack;
 
     // for statistics
     int _statsFrameCounter;

@@ -32,7 +32,7 @@ public:
 public:
     PlayerInputHandler();
 
-    void handleEvent(sf::Event&, CommandQueue&);
+    void handleEvent(const sf::Event&, CommandQueue&);
     void handleRealTimeInput(CommandQueue&);
 
     void bindKey(sf::Keyboard::Key, Action);

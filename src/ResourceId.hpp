@@ -21,6 +21,8 @@ enum class TextureId
     EAGLE,
     RAPTOR,
 
+    TITLE_SCREEN,
+
     TOTAL_COUNT
 };
 
