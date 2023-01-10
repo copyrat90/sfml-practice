@@ -38,7 +38,7 @@ PlayerInputHandler::PlayerInputHandler()
     initActionBindings();
 }
 
-void PlayerInputHandler::handleEvent(sf::Event& event, CommandQueue& commandQueue)
+void PlayerInputHandler::handleEvent(const sf::Event& event, CommandQueue& commandQueue)
 {
     if (event.type == sf::Event::EventType::KeyPressed)
     {

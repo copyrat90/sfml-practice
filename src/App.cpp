@@ -1,25 +1,38 @@
-#include "Game.hpp"
+#include "App.hpp"
 
 #include <SFML/Window/Event.hpp>
 
 #include <algorithm>
 #include <string>
 
+#include "GameState.hpp"
+#include "MenuState.hpp"
+#include "PauseState.hpp"
+#include "TitleState.hpp"
+
 namespace gr
 {
 
-Game::Game()
-    : _window(sf::VideoMode(640, 480), "SFML Practice"), _world(_window), _statsFrameCounter(0),
+App::App()
+    : _window(sf::VideoMode(640, 480), "SFML Practice"),
+      _stateStack(State::Context(_window, _textures, _fonts, _playerInputHandler)), _statsFrameCounter(0),
       _statsElapsedSeconds(sf::seconds(0))
 {
     _window.setFramerateLimit(FPS);
-    _font.loadFromFile("assets/fonts/Sansation.ttf");
-    _statsText.setFont(_font);
+    _window.setKeyRepeatEnabled(false);
+
+    _fonts.loadFromFile(FontId::SANSATION, "assets/fonts/Sansation.ttf");
+    _textures.loadFromFile(TextureId::TITLE_SCREEN, "assets/graphics/TitleScreen.png");
+
+    _statsText.setFont(_fonts.get(FontId::SANSATION));
     _statsText.setPosition(5.f, 5.f);
     _statsText.setCharacterSize(10);
+
+    registerStates();
+    _stateStack.pushState(StateId::TITLE);
 }
 
-void Game::run()
+void App::run()
 {
     const sf::Time FIXED_DELTA_TIME = sf::seconds(SEC_PER_FRAME);
     const sf::Time MAX_REMAIN_TIME = sf::seconds(0.25f);
@@ -39,13 +52,17 @@ void Game::run()
 
             processEvents();
             update(FIXED_DELTA_TIME);
+
+            // 상태 스택이 비었으면, 게임 종료
+            if (_stateStack.isEmpty())
+                _window.close();
         }
         updateStatistics(elapsedTime);
         render();
     }
 }
 
-void Game::processEvents()
+void App::processEvents()
 {
     for (auto event = sf::Event{}; _window.pollEvent(event);)
     {
@@ -55,26 +72,22 @@ void Game::processEvents()
             _window.close();
             break;
         default:
-            _playerInputHandler.handleEvent(event, _world.getCommandQueue());
+            _stateStack.handleEvent(event);
             break;
         }
     }
-
-    // 1. 사용자 입력 -> Command로 만들어 Command 큐에 넣기
-    // (우선 Command를 처리하지는 않고, 쌓아만 둔다. 처리는 update()에서 수행)
-    _playerInputHandler.handleRealTimeInput(_world.getCommandQueue());
 }
 
-void Game::update(const sf::Time deltaTime)
+void App::update(const sf::Time deltaTime)
 {
-    _world.update(deltaTime);
+    _stateStack.update(deltaTime);
 }
 
-void Game::render()
+void App::render()
 {
     _window.clear();
 
-    _window.draw(_world);
+    _window.draw(_stateStack);
 
     _window.setView(_window.getDefaultView());
     _window.draw(_statsText);
@@ -82,7 +95,7 @@ void Game::render()
     _window.display();
 }
 
-void Game::updateStatistics(const sf::Time deltaTime)
+void App::updateStatistics(const sf::Time deltaTime)
 {
     ++_statsFrameCounter;
     _statsElapsedSeconds += deltaTime;
@@ -96,6 +109,14 @@ void Game::updateStatistics(const sf::Time deltaTime)
         _statsFrameCounter = 0;
         _statsElapsedSeconds -= sf::seconds(1);
     }
+}
+
+void App::registerStates()
+{
+    _stateStack.registerState<TitleState>(StateId::TITLE);
+    _stateStack.registerState<MenuState>(StateId::MENU);
+    _stateStack.registerState<GameState>(StateId::GAME);
+    _stateStack.registerState<PauseState>(StateId::PAUSE);
 }
 
 } // namespace gr
