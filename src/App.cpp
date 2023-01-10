@@ -6,6 +6,9 @@
 #include <string>
 
 #include "GameState.hpp"
+#include "MenuState.hpp"
+#include "PauseState.hpp"
+#include "TitleState.hpp"
 
 namespace gr
 {
@@ -110,9 +113,10 @@ void App::updateStatistics(const sf::Time deltaTime)
 
 void App::registerStates()
 {
+    _stateStack.registerState<TitleState>(StateId::TITLE);
+    _stateStack.registerState<MenuState>(StateId::MENU);
     _stateStack.registerState<GameState>(StateId::GAME);
-
-    throw "TODO: Add every state on App::registerStates()";
+    _stateStack.registerState<PauseState>(StateId::PAUSE);
 }
 
 } // namespace gr
