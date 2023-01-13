@@ -3,9 +3,8 @@
 #include "State.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
 
-#include <array>
+#include "gui/Container.hpp"
 
 namespace gr
 {
@@ -20,22 +19,9 @@ public:
     void draw(sf::RenderTarget&, sf::RenderStates) const override;
 
 private:
-    void updateOptionText();
-
-private:
-    enum MenuOption
-    {
-        PLAY,
-        EXIT,
-
-        TOTAL_COUNT
-    };
-
-private:
     sf::Sprite _bgSprite;
-    std::array<sf::Text, MenuOption::TOTAL_COUNT> _texts;
 
-    MenuOption _cursorOption;
+    gui::Container _guiContainer;
 };
 
 } // namespace gr
