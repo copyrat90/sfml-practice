@@ -23,6 +23,10 @@ enum class TextureId
 
     TITLE_SCREEN,
 
+    BUTTON_NORMAL,
+    BUTTON_SELECTED,
+    BUTTON_PRESSED,
+
     TOTAL_COUNT
 };
 

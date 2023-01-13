@@ -23,6 +23,9 @@ App::App()
 
     _fonts.loadFromFile(FontId::SANSATION, "assets/fonts/Sansation.ttf");
     _textures.loadFromFile(TextureId::TITLE_SCREEN, "assets/graphics/TitleScreen.png");
+    _textures.loadFromFile(TextureId::BUTTON_NORMAL, "assets/graphics/ButtonNormal.png");
+    _textures.loadFromFile(TextureId::BUTTON_SELECTED, "assets/graphics/ButtonSelected.png");
+    _textures.loadFromFile(TextureId::BUTTON_PRESSED, "assets/graphics/ButtonPressed.png");
 
     _statsText.setFont(_fonts.get(FontId::SANSATION));
     _statsText.setPosition(5.f, 5.f);
