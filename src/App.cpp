@@ -8,6 +8,7 @@
 #include "GameState.hpp"
 #include "MenuState.hpp"
 #include "PauseState.hpp"
+#include "SettingsState.hpp"
 #include "TitleState.hpp"
 
 namespace gr
@@ -23,6 +24,9 @@ App::App()
 
     _fonts.loadFromFile(FontId::SANSATION, "assets/fonts/Sansation.ttf");
     _textures.loadFromFile(TextureId::TITLE_SCREEN, "assets/graphics/TitleScreen.png");
+    _textures.loadFromFile(TextureId::BUTTON_NORMAL, "assets/graphics/ButtonNormal.png");
+    _textures.loadFromFile(TextureId::BUTTON_SELECTED, "assets/graphics/ButtonSelected.png");
+    _textures.loadFromFile(TextureId::BUTTON_PRESSED, "assets/graphics/ButtonPressed.png");
 
     _statsText.setFont(_fonts.get(FontId::SANSATION));
     _statsText.setPosition(5.f, 5.f);
@@ -115,6 +119,7 @@ void App::registerStates()
 {
     _stateStack.registerState<TitleState>(StateId::TITLE);
     _stateStack.registerState<MenuState>(StateId::MENU);
+    _stateStack.registerState<SettingsState>(StateId::SETTINGS);
     _stateStack.registerState<GameState>(StateId::GAME);
     _stateStack.registerState<PauseState>(StateId::PAUSE);
 }
