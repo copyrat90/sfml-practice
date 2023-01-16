@@ -22,6 +22,10 @@ MenuState::MenuState(StateStack& stateStack, Context context)
     auto settingsBtn = std::make_unique<gui::Button>(context.fonts, context.textures);
     settingsBtn->setString("Settings");
     settingsBtn->setPosition(100, 300);
+    settingsBtn->setCallback([this]() {
+        requestStateStackPop();
+        requestStateStackPush(StateId::SETTINGS);
+    });
 
     auto exitBtn = std::make_unique<gui::Button>(context.fonts, context.textures);
     exitBtn->setString("Exit");

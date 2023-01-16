@@ -1,8 +1,10 @@
 #pragma once
 
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 #include <cmath>
+#include <string>
 
 namespace gr::util
 {
@@ -17,5 +19,7 @@ void centerOrigin(TObj& obj)
     const sf::FloatRect bounds = obj.getLocalBounds();
     obj.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
 }
+
+std::string toString(sf::Keyboard::Key key);
 
 } // namespace gr::util

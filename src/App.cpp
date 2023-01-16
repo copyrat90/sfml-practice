@@ -8,6 +8,7 @@
 #include "GameState.hpp"
 #include "MenuState.hpp"
 #include "PauseState.hpp"
+#include "SettingsState.hpp"
 #include "TitleState.hpp"
 
 namespace gr
@@ -118,6 +119,7 @@ void App::registerStates()
 {
     _stateStack.registerState<TitleState>(StateId::TITLE);
     _stateStack.registerState<MenuState>(StateId::MENU);
+    _stateStack.registerState<SettingsState>(StateId::SETTINGS);
     _stateStack.registerState<GameState>(StateId::GAME);
     _stateStack.registerState<PauseState>(StateId::PAUSE);
 }
